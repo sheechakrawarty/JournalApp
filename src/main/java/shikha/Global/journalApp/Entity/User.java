@@ -1,5 +1,6 @@
 package shikha.Global.journalApp.Entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -16,6 +17,7 @@ import java.util.List;
 @Document(collection = "users")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -29,6 +31,10 @@ public class User {
     private List<JournalEntry> journalEntries = new ArrayList<>();
 
     private List<String> roles;
+
+    private boolean sentiments;
+
+    private String email;
 
 
 }

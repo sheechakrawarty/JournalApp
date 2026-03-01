@@ -8,11 +8,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.web.bind.annotation.*;
+import shikha.Global.journalApp.ApiResp.Weather;
 import shikha.Global.journalApp.Entity.JournalEntry;
 import shikha.Global.journalApp.Entity.User;
 import shikha.Global.journalApp.Repository.UserRepo;
 import shikha.Global.journalApp.services.JournalEntryServices;
 import shikha.Global.journalApp.services.UserServices;
+import shikha.Global.journalApp.services.WeatherServices;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -27,6 +29,8 @@ public class UserController {
     private UserServices userService;
     @Autowired
     UserRepo userRepository;
+    @Autowired
+    WeatherServices weatherServices;
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody User user){
@@ -50,7 +54,11 @@ public class UserController {
     public ResponseEntity<?> greetings(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name =authentication.getName();
-        return new ResponseEntity<>("hello" +name, HttpStatus.OK);
+        Weather weather =  weatherServices.getWeather("New york");
+        if(weather != null){
+            return new ResponseEntity<>("hello " +name +"tem :"+weather.getCurrent().getTemperature(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("hello " +name , HttpStatus.OK);
     }
 
 }

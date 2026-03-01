@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.management.ManagementFactory;
 
@@ -26,5 +27,8 @@ public class JournalApplication {
 	PlatformTransactionManager mana(MongoDatabaseFactory mongoDatabase){
 		return new MongoTransactionManager(mongoDatabase);
 	}
-
+	@Bean
+	RestTemplate restTemplate (){
+		return new RestTemplate();
+	}
 }
